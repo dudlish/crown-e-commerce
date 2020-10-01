@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 const Header = ({ currentUser }) => (
     <div className='header'>
@@ -14,14 +16,17 @@ const Header = ({ currentUser }) => (
             <Link className='option' to='/shop'>SHOP</Link>
             <Link className='option' to='/shop'>CONTACT</Link>
             {
-                currentUser ?
+                currentUser ? (
                     <div className='option' onClick={() => auth.signOut()}> SIGN OUT </div>
-                    :
-                    <Link className='option' to='/signin'> SIGN IN </Link>
-            }
+                ) : (
+                        <Link className='option' to='/signin'> SIGN IN </Link>
+                    )}
+            <CartIcon />
         </div>
+        <CartDropdown />
     </div>
 )
+// function that allows access the state, that is our root reducer
 const mapStateToProps = state => ({
     currentUser: state.user.currentUser
 })
